@@ -2,8 +2,6 @@ name: Build and Release
 
 on:
   push:
-    branches:
-      - main
     tags:
       - 'v*'  # 'v'로 시작하는 태그가 푸시될 때 릴리즈를 생성
 
@@ -49,14 +47,13 @@ jobs:
 
       - name: GH Release
         uses: softprops/action-gh-release@v2.0.8
-        if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            set_spotlight-aarch64-apple-darwin
-            set_spotlight-x86_64-apple-darwin
+            ${{ github.workspace }}/set_spotlight-aarch64-apple-darwin  
+            ${{ github.workspace }}/set_spotlight-x86_64-apple-darwin
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
-            ${{ github.ref }}
+            auto-generated release
           draft: false
           prerelease: false
   
