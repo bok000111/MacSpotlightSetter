@@ -28,6 +28,7 @@ jobs:
       - name: Upload release binary
         uses: actions/upload-artifact@v4.4.3
         with:
+          name: set_spotlight-${{ matrix.target }}
           path: set_spotlight-${{ matrix.target }}
 
         
