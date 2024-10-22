@@ -31,3 +31,29 @@ jobs:
           name: set_spotlight-${{ matrix.target }}
           path: target/${{ matrix.target }}/release/set_spotlight  # 타겟별 바이너리 경로
         
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download arm64 release binary
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: set_spotlight-aarch64-apple-darwin
+      - name: Download x86_64 release binary
+        uses: actions/download-artifact@v4.1.8
+        with:
+          name: set_spotlight-x86_64-apple-darwin
+
+      - name: GH Release
+        uses: softprops/action-gh-release@v2.0.8
+        with:
+          files: |
+            set_spotlight-aarch64-apple-darwin
+            set_spotlight-x86_64-apple-darwin
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: |
+            ${{ github.ref }}
+          draft: false
+          prerelease: false
+  
