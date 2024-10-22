@@ -39,7 +39,7 @@ jobs:
       - name: Download release binary
         uses: actions/download-artifact@v4.1.8
         with:
-          name: set_spotlight-*
+          pattern: set_spotlight-*
           merge-multiple: true
       - run: ls -R
       - name: GH Release
