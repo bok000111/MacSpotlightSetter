@@ -40,7 +40,6 @@ jobs:
         uses: actions/download-artifact@v4.1.8
         with:
           pattern: set_spotlight-*
-          merge-multiple: true
       - run: ls -R
       - name: GH Release
         uses: softprops/action-gh-release@v2.0.8
