@@ -18,16 +18,16 @@ jobs:
         uses: actions/checkout@v4.2.1
 
       - name: Install Rust toolchain
-        run: rustup target add ${{ matrix.target }}  # 대상 아키텍처 설치
+        run: rustup target add ${{ matrix.target }}
 
       - name: Build the project
-        run: cargo build --release --target ${{ matrix.target }}  # 각 아키텍처별로 릴리즈 빌드
+        run: cargo build --release --target ${{ matrix.target }}
 
       - name: Upload release binary
         uses: actions/upload-artifact@v4.4.3
         with:
           name: set_spotlight-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/set_spotlight  # 타겟별 바이너리 경로
+          path: target/${{ matrix.target }}/release/set_spotlight
         
   release:
     permissions:
@@ -36,15 +36,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download arm64 release binary
+      - name: Download release binary
         uses: actions/download-artifact@v4.1.8
         with:
-          name: set_spotlight-aarch64-apple-darwin
-      - name: Download x86_64 release binary
-        uses: actions/download-artifact@v4.1.8
-        with:
-          name: set_spotlight-x86_64-apple-darwin
-
+          name: set_spotlight-*
+          merge-multiple: true
+      - run: ls -R
       - name: GH Release
         uses: softprops/action-gh-release@v2.0.8
         with:
