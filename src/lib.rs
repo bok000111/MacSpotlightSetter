@@ -39,13 +39,12 @@ pub fn get_spotlight(
 }
 
 pub fn download_spotlight(spotlight: &Spotlight) -> Result<PathBuf, Box<dyn Error>> {
-    let dist = env::temp_dir().join("mac_spotlight_setter");
+    let dist = env::temp_dir().join("set_spotlight");
     if !dist.exists() {
         fs::create_dir_all(&dist)?;
     }
-    println!("Downloading spotlight image... {}", spotlight.landscape);
-    let resp = ureq::get(&spotlight.landscape).call()?;
 
+    let resp = ureq::get(&spotlight.landscape).call()?;
     let mut data: Vec<u8> = Vec::with_capacity(1e8 as usize); // 100MB
     resp.into_reader().read_to_end(&mut data)?;
 
@@ -96,8 +95,6 @@ pub fn set_wallpaper(path: &PathBuf) -> Result<(), Box<dyn Error>> {
         );
     }
 
-    fs::remove_file(&path).ok();
-
     Ok(())
 }
 
@@ -108,9 +105,9 @@ pub fn install() -> Result<(), Box<dyn Error>> {
         fs::create_dir(&bin_dir)?;
     }
 
-    // ~/bin/mac_spotlight_setter 파일 생성
+    // ~/bin/set_spotlight 파일 생성
     let current_exe = env::current_exe()?;
-    let dest = bin_dir.join("mac_spotlight_setter");
+    let dest = bin_dir.join("set_spotlight");
     fs::copy(&current_exe, &dest)?;
 
     // ~/Library/LaunchAgents/com.jbok.setwallpaper.plist 파일 생성
@@ -225,10 +222,8 @@ pub fn uninstall() -> Result<(), Box<dyn Error>> {
     // ~/Library/LaunchAgents/com.jbok.setwallpaper.plist 파일 삭제
     fs::remove_file(&plist).ok();
 
-    // ~/bin/mac_spotlight_setter 파일 삭제
-    let bin = dirs_next::home_dir()
-        .unwrap()
-        .join("bin/mac_spotlight_setter");
+    // ~/bin/set_spotlight 파일 삭제
+    let bin = dirs_next::home_dir().unwrap().join("bin/set_spotlight");
     fs::remove_file(&bin).ok();
 
     Ok(())

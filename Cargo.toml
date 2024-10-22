@@ -9,7 +9,7 @@ miniserde = { version = "0.1.40"}
 ureq = { version = "2.10.1", default-features = false, features = ["tls", "gzip"]}
 
 [[bin]]
-name = "mac_spotlight_setter"
+name = "set_spotlight"
 path = "src/main.rs"
 
 [lib]
