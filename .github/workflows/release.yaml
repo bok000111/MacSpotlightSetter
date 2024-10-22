@@ -32,6 +32,8 @@ jobs:
           path: target/${{ matrix.target }}/release/set_spotlight  # 타겟별 바이너리 경로
         
   release:
+    permissions:
+      contents: write
     needs: build
     runs-on: ubuntu-latest
 
