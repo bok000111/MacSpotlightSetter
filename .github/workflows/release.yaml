@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.1
 
       - name: Install Rust toolchain
         run: rustup target add ${{ matrix.target }}  # 대상 아키텍처 설치
@@ -26,8 +26,8 @@ jobs:
         run: cargo build --release --target ${{ matrix.target }}  # 각 아키텍처별로 릴리즈 빌드
 
       - name: Upload release binary
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4.4.3
         with:
           name: mac-spotlight-setter-${{ matrix.target }}
-          path: target/${{ matrix.target }}/release/mac-spotlight-setter  # 타겟별 바이너리 경로
+          path: target/${{ matrix.target }}/release/mac_spotlight_setter  # 타겟별 바이너리 경로
         
