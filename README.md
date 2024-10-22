@@ -10,18 +10,38 @@ Windows 10/11에서 제공하는 스포트라이트 배경화면을 자동으로
 
 ## 사용법
 
-1. **최신 릴리즈에서 바이너리와 스크립트 다운로드**:
+1. **최신 릴리즈에서 아키텍쳐에 맞는 바이너리 다운로드**:
 
-    최신 릴리즈 페이지에서 macOS용 바이너리 파일과 자동화 설정에 필요한 `plist` 파일 및 스크립트를 다운로드하세요.
+    애플 칩을 사용하는 Mac을 사용하고 있다면, aarch64 아키텍쳐의 바이너리를 다운로드하세요.
+
+    인텔 칩을 사용하는 Mac을 사용하고 있다면, x86_64 아키텍쳐의 바이너리를 다운로드하세요.
 
     [Latest Release](https://github.com/your-username/mac-spotlight-setter/releases/latest)
 
-2. **설정 스트립트 실행**:
+2. **바이너리 설치**:
 
-    mac_spotlight_setter와 set_plist.sh 파일을 같은 디렉토리에 다운로드하고, set_plist.sh 파일을 실행하세요.
+    install 인자를 사용하면 자동으로 plist를 생성하고 설정합니다.
+    
+    기본값은 4시간마다 배경화면을 갱신합니다.
 
     ```bash
-    ./set_plist.sh
+    ./set_spotlight-[your-architecture] install
+    ```
+
+3. **제거**:
+
+    만약 설정한 plist를 제거하고 싶다면, 다음 명령어를 실행하세요.
+
+    ```bash
+    ./set_spotlight-[your-architecture] uninstall
+    ```
+
+4. **수동으로 실행**:
+
+    인자 없이 실행하면 즉시 배경화면을 갱신합니다.
+
+    ```bash
+    ./set_spotlight-[your-architecture]
     ```
 
 ## Acknowledgements
