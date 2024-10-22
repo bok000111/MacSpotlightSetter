@@ -2,6 +2,8 @@ name: Build for x86_64 and arm64 and release
 
 on:
   push:
+    branches:
+      - main
     tags:
       - 'v*'  # 'v'로 시작하는 태그가 푸시될 때 릴리즈를 생성
 
