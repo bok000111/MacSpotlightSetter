@@ -1,0 +1,31 @@
+name: Build for x86_64 and arm64 and release
+
+on:
+  push:
+    tags:
+      - 'v*'  # 'v'로 시작하는 태그가 푸시될 때 릴리즈를 생성
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    strategy:
+        matrix:
+            target: [x86_64-apple-darwin, aarch64-apple-darwin]
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Install Rust toolchain
+        run: rustup target add ${{ matrix.target }}  # 대상 아키텍처 설치
+
+      - name: Build the project
+        run: cargo build --release --target ${{ matrix.target }}  # 각 아키텍처별로 릴리즈 빌드
+
+      - name: Upload release binary
+        uses: actions/upload-artifact@v3
+        with:
+          name: mac-spotlight-setter-${{ matrix.target }}
+          path: target/${{ matrix.target }}/release/mac-spotlight-setter  # 타겟별 바이너리 경로
+        
